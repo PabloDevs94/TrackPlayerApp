@@ -112,42 +112,7 @@ const App = () => {
   // Funções de toggle
   const toggleSpeedOptions = () => setShowSpeedOptions(!showSpeedOptions);
   const toggleQueue = () => setShowQueue(!showQueue); // Função para exibir/esconder a queue
-
-  import React, { useEffect, useState } from 'react';
-  import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
-  import TrackPlayer, { useProgress, Event } from 'react-native-track-player';
-  import { Play, Pause, SkipForward, SkipBack, FastForward, Rewind, List, Clock } from 'phosphor-react-native';
-  import Slider from '@react-native-community/slider';
   
-  const App = () => {
-    const [trackTitle, setTrackTitle] = useState(tracks[0].title);
-    const [artistName, setArtistName] = useState(tracks[0].artist);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [playbackSpeed, setPlaybackSpeed] = useState(1);
-    const { position, duration } = useProgress();
-    const [showSpeedOptions, setShowSpeedOptions] = useState(false);
-    const [showQueue, setShowQueue] = useState(false);
-  
-    useEffect(() => {
-      setupPlayer();
-      const trackChangeListener = TrackPlayer.addEventListener(Event.PlaybackTrackChanged, async (data) => {
-        if (data.nextTrack !== null) {
-          const track = await TrackPlayer.getTrack(data.nextTrack);
-          setTrackTitle(track.title);
-          setArtistName(track.artist);
-        }
-      });
-      return () => {
-        trackChangeListener.remove();
-      };
-    }, []);
-  
-    const setupPlayer = async () => {
-      await TrackPlayer.setupPlayer();
-      await TrackPlayer.add(tracks);
-      setTrackTitle(tracks[0].title);
-      setArtistName(tracks[0].artist);
-    };
   
     return (
       <View className="flex-1 bg-gray-900 p-4">
